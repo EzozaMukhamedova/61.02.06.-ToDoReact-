@@ -7,11 +7,11 @@ function App() {
   const addTask = () => {
     const newTask = inputRef.current.value.trim();
     if (newTask === "") {
-      alert("Bo'sh bo'laolmaydi!");
+      alert("Bosh joy aniqlandi!");
       return;
     }
     if (tasks.some((task) => task.text === newTask)) {
-      alert("Bu allaqachon mavjud!");
+      alert("Allaqachon bor!");
       return;
     }
     setTasks([...tasks, { text: newTask, completed: false }]);
@@ -19,13 +19,11 @@ function App() {
   };
 
   const toggleTaskCompletion = (index) => {
-    const newTasks = tasks.map((task, i) => {
-      if (i === index) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    setTasks(newTasks);
+    setTasks(
+      tasks.map((task, i) =>
+        i === index ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
 
   const deleteTask = (index) => {
@@ -36,19 +34,19 @@ function App() {
   const completedTasks = tasks.filter((task) => task.completed);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0d0714] text-[#9e78cf]">
-      <div className="py-14 px-20 bg-[#1d1825] rounded-2xl">
-        <div className="flex justify-between mb-6">
+    <div className="flex items-center justify-center h-screen bg-[#0d0714] text-[#9e78cf]">
+      <div className="bg-[#1d1825] py-[52.5px] px-[75.5px] rounded-2xl w-[583px] h-[700px]">
+        <div className="flex justify-between mb-[59px]">
           <input
             ref={inputRef}
             type="text"
             placeholder="Add a new task"
-            className="flex-grow bg-transparent border border-[#9e78cf] rounded-lg px-4 py-2 focus:outline-none focus:border-[#78CFB0] hover:border-[#78CFB0]"
+            className="bg-transparent border border-[#9e78cf] rounded-[10px] px-4 py-2 w-full focus:outline-none hover:border-[#78CFB0] cursor-pointer"
             onKeyPress={(e) => e.key === "Enter" && addTask()}
           />
           <button
             onClick={addTask}
-            className="ml-4 bg-[#9e78cf] p-2 rounded-lg hover:bg-[#78CFB0]"
+            className="bg-[#9e78cf] rounded-[10px] p-2 hover:bg-[#78CFB0] ml-[10px] cursor-pointer"
           >
             +
           </button>
@@ -58,17 +56,9 @@ function App() {
           {activeTasks.map((task, index) => (
             <div
               key={index}
-              className={`flex justify-between items-center p-2 rounded-lg ${
-                task.completed ? "bg-[#2c2432]" : "bg-[#15101C]"
-              } hover:bg-[#2c2432]`}
+              className="flex justify-between items-center p-2 rounded-[10px] bg-[#15101C] hover:bg-[#2c2432]"
             >
-              <span
-                className={`px-4 py-2 text-lg ${
-                  task.completed ? "line-through text-[#78CFB0]" : "text-white"
-                }`}
-              >
-                {task.text}
-              </span>
+              <span className="px-4 py-2 text-lg text-white">{task.text}</span>
               <div className="flex space-x-2">
                 <button
                   onClick={() => toggleTaskCompletion(tasks.indexOf(task))}
@@ -91,9 +81,9 @@ function App() {
           {completedTasks.map((task, index) => (
             <div
               key={index}
-              className={`flex justify-between items-center p-2 rounded-lg bg-[#15101C] hover:bg-[#2c2432]`}
+              className="flex justify-between items-center p-2 rounded-[10px] bg-[#15101C] hover:bg-[#2c2432]"
             >
-              <span className={`px-4 py-2 text-lg text-[#78CFB0] line-through`}>
+              <span className="px-4 py-2 text-lg text-[#78CFB0] line-through">
                 {task.text}
               </span>
               <div className="flex space-x-2">
